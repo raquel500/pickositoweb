@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+    text-transform: capitalize;
+    transition: all .2s linear;
+}
+
+html{
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+ 
+body{
+    overflow-x: hidden;
+}
+
+#home{
+    background: linear-gradient(0deg rgba(0,0,0,.6), rgba(0,0,0,.6));
+    min-height: 100vh;
+}
+
+@mixin button(){
+    outline: none;
+    border: none;
+    border-radius: 5rem;
+    color: #333;
+    font-size: 1.6rem;
+    text-transform: capitalize;
+    letter-spacing: .2rem;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+
+}
+
+outline: none; border: none; border-collapse: separate; border-radius: 2rem; color: #333; font-size: 1.6rem; text-transform: capitalize; letter-spacing: .2rem; cursor: pointer; position: relative; z-index: 1; overflow: hidden;

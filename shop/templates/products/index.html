@@ -1,0 +1,120 @@
+{% extends 'layout.html'%}
+{% block content %}
+{% include 'navbar.html' %} 
+
+<!--<div class="container">
+    <div class="row" >-->
+
+<section id="home" class="container-fluid">
+    <div class="row min-vh-110 align-items-center">
+        <p>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            
+            <h1 style="font-size: 5rem; color:red; margin-left: 4rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: bolder; text-shadow: .1rem .1rem .3rem black">Pickosito</h1>
+            <h1 style="font-size: 2rem; color:darkred; margin-left: 4rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; text-shadow: .1rem .1rem .3rem black">Enjoy the delicious food</h1>
+            <a href="{{url_for('customerLogin')}}" style="text-align: center;" ><button class="btn btn-sm btn-warning" style="text-align: center; background-color: #FF4500; height: 2.5rem; width: 8rem; outline: none; border: none; border-collapse: separate; border-radius: 1rem!important; color: white; font-size: 1rem; text-transform: capitalize; letter-spacing: .2rem; cursor: pointer; position: relative; z-index: 1; overflow: hidden">Log in</button></a>
+        </p>    
+     
+            <div class="image">
+                <img src="static/images/chili.jpg" style="width:100%;height:100%;position:absolute;top:0;left:0;z-index:-5000;">
+            </img>
+            </div>
+    </div>
+  
+</section>
+
+    <br>
+    <br>
+    <br>
+
+
+    <section class="container-fluid" styles="min-height:100vh">
+        <div class="heading text-center" style="color:gray">
+        <h1>Our<span style="color:#FF4500"> Menu</span></h1>
+        </div>
+        <br>
+
+    <div class="row" style="width:95%; margin:7rem auto; display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap;">
+
+    
+        {% if category %}
+        
+
+        {% for c in category %}
+
+        
+            <div class="col-md-3 mt-3">
+                <div class="card">
+                    <img src="{{url_for('static', filename='images/' + c.image_1)}}" alt="{{c.name}}" class="card-img-top "
+                    style="height:20rem; width:100%; object-fit: cover">
+                    
+                    <div class="card-body" >
+                        <h5 class="text-center">{{c.name}}</h5>
+                        <p class="text-center">€{{c.price}}</p>
+                        
+                    </div>
+        
+                    <div class="card-footer">
+                        <form action="{{url_for('AddCart')}}" method="POST">
+                            <input type="hidden" name="c_id" value="{{c.id}}">
+                            <button type="submit" class="btn btn-sm btn-warning">Add to order</button>
+                            <label for=""> Quantity:</label>
+                            <input type="number" name="quantity" min="1" max="30" value="1"></td>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+
+    {% else %}
+
+
+            {% for product in products %}
+            <div class="col-md-3 mt-3">
+                <div class="card">
+                    <img src="{{url_for('static', filename='images/' + product.image_1)}}" alt="{{product.name}}" class="card-img-top"
+                    style="height:20rem; width:100%; object-fit: cover">
+                    
+                    <div class="card-body">
+                        <h5 class="text-center">{{product.name}}</h5>
+                        <p class="text-center">€{{product.price}}</p>
+                        <!---<h5 style="text-shadow: 1px 1px 2px #000; color: #f00;"></h5>-->
+                    </div>
+
+                    <div class="card-footer">
+                        <form action="{{url_for('AddCart')}}" method="POST">
+                            <input type="hidden" name="product_id" value="{{product.id}}">
+                            <button type="submit" class="btn btn-sm btn-warning">Add to order</button>
+                            <label for=""> Quantity:</label>
+                            <input type="number" name="quantity" min="1" max="30" value="1"></td>
+
+                        <!--<a href="#" class="btn ntb-sm btn-warning">Add to order</a>-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {% endblock content %}

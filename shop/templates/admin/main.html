@@ -1,0 +1,63 @@
+<!DOCTYPE html>>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intitial-sclae=1, shrink-to-fit=no">
+    <title> Pickosito</title>
+    <link rel="stylesheet" href="fonts/font-awesome.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="fonts/google-fonts.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <script src="js/query.js"></script>
+
+  </head>
+  <body>
+<!-- header -->
+
+{% extends 'layout.html'%}
+{% block content %}
+
+<header id="header">
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/">Our menu</a></li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Categories
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {% for category in categories %}
+        <li><a class="dropdown-item" href="{{url_for('get_category', id = category.id)}}">{{category.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% if current_user.is_authenticated %}
+    <li class="nav-item">
+      <a href="{{url_for('customer_logout')}}" class="nav-link">{{current_user.name}}</a>
+    </li>
+    <li class="nav-item">
+      <a href="{{url_for('customer_logout')}}" class="nav-link">Log out</a>
+    </li>
+    {% else %} 
+    <li class="nav-item">
+      <a href="{{url_for('customer_register')}}" class="nav-link">Sign up</a>
+    </li>
+    <li class="nav-item">
+      <a href="{{url_for('customerLogin')}}" class="nav-link">Log in</a>
+    </li>
+    {% endif %} 
+
+    <!--ORDERS-->
+    <li class="nav-item">
+      <a class="nav-link" href="{{url_for('getCart')}}" tabindex="-1" aria-disabled="true">Order ({{session['Shoppingcart']|length}})</a>
+    </li>
+  </ul>
+</div>
+</div>
+</nav>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% include 'navbar.html' %} 
+
+<div class="container mt-4">
+    <div class="container">
+        {% include '_messages.html' %} 
+        <div class="row">
+            <div class="col-md-12">
+            <table class="table table-sm"
+                <thead>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <th>PLU</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Update</th>
+                    <th>Remove</th>
+                </thead>
+                <tbody>
+                    {% for key , product in session['Shoppingcart'].items() %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{product.name}}</td>
+                        <td>€{{product.price}}</td>
+                        <form action="{{url_for('updatecart', code=key)}}" method="post">
+                        <td><input type="number" name="quantity" min="1" max="30" value="{{product.quantity}}"></td>
+                        {% set subtotal = product.quantity|int * product.price|float %}
+                        <td>{{subtotal}}</td>
+                        <td><button type="submit" class="btn btn-sm btn-warning">Update</button></td>
+                        </form>
+                        <td><a href="{{url_for('deleteitem', id=key)}}" class="btn btn-sm btn-danger">Remove</a></td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <table class="table table-sm">
+                <tr>
+                    <td><a href="{{url_for('get_order')}}" class="btn btn-success">Place my order</a></td>
+                    <td width="30%"></td>
+                    <td colspan="1"><h5>Total: {{subtotal}}</h5></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+                
+    </div>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,131 @@
+{% extends 'layout.html'%}
+
+{% block content %}
+
+    <!-- navbar-->
+
+    <header id="header">
+    <div class="container" >
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" >
+            <div class="container-fluid"style="background-color: darkred ; height: 70px; width: 100%; position: fixed; top: 0; left: 0; display: flex; align-items: center; padding: 2rem 4rem; z-index: 1000; justify-content: space-around">
+                <a class="navbar-brand" style = "font-size: 1.8rem; color: #FF4500; color: whitesmoke" href="/">Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        
+                    <li class="nav-item">
+                    <a class="nav-link" href="/ourmenu" style = "font-size: 1.3rem; color:whitesmoke" >Our menu</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style = "font-size: 1.3rem; color:whitesmoke">
+                        Categories
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for category in categories %}
+                        <li><a class="dropdown-item" style = "color:black; font-size: 1.3rem"href="{{url_for('get_category', id = category.id)}}">{{category.name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                    </li>
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                    <a href="{{url_for('customer_logout')}}" class="nav-link" style="font-size: 1.3rem; color: whitesmoke">{{current_user.name}}</a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="{{url_for('customer_logout')}}" class="nav-link" style="font-size: 1.3rem; color: whitesmoke">Log out</a>
+                    </li>
+                    {% else %} 
+                    <li class="nav-item">
+                    <a href="{{url_for('customer_register')}}" class="nav-link" style="font-size: 1.3rem; color: whitesmoke">Sign up</a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="{{url_for('customerLogin')}}" class="nav-link" style="font-size: 1.3rem; color: whitesmoke">Log in</a>
+                    </li>
+                    {% endif %} 
+
+                    <!--ORDERS-->
+                    <li class="nav-item" >
+                        <a class="nav-link" href="{{url_for('getCart')}}" tabindex="-1" aria-disabled="true" style="font-size: 1.3rem; color:whitesmoke">Order ({{session['Shoppingcart']|length}})</a>
+                    </li>
+                    </ul>
+                    <!--<form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>-->
+                </div>
+                </div>
+    
+            </nav>
+            
+    
+            <!--<a href="" class="logo"><img src="static/images/flame.png" style="filter: opacity(0.5) drop-shadow(0 0 0 red); height: 50px" alt=""></a>-->
+            </div>
+    
+        </header>
+        <!---Navbar ends-->
+
+
+        {% if category %}
+        
+
+        {% for c in category %}
+
+        
+            <div class="col-md-3 mt-3">
+                <div class="card">
+                    <img src="{{url_for('static', filename='images/' + c.image_1)}}" alt="{{c.name}}" class="card-img-top "
+                    style="height:20rem; width:100%; object-fit: cover">
+                    
+                    <div class="card-body" >
+                        <h5 class="text-center">{{c.name}}</h5>
+                        <p class="text-center">€{{c.price}}</p>
+                        <!---<                  h5 style="text-shadow: 1px 1px 2px #000; color: #f00;"></h5>-->
+                    </div>
+        
+                    <div class="card-footer">
+                        <form action="{{url_for('AddCart')}}" method="POST">
+                            <input type="hidden" name="c_id" value="{{c.id}}">
+                            <button type="submit" class="btn btn-sm btn-warning">Add to order</button>
+                            <label for=""> Quantity:</label>
+                            <input type="number" name="quantity" id="" value="1" min="1">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+
+    {% else %}
+
+
+            {% for product in products %}
+            <div class="col-md-3 mt-3">
+                <div class="card">
+                    <img src="{{url_for('static', filename='images/' + product.image_1)}}" alt="{{product.name}}" class="card-img-top"
+                    style="height:20rem; width:100%; object-fit: cover">
+                    
+                    <div class="card-body">
+                        <h5 class="text-center">{{product.name}}</h5>
+                        <p class="text-center">€{{product.price}}</p>
+                        <!---<h5 style="text-shadow: 1px 1px 2px #000; color: #f00;"></h5>-->
+                    </div>
+
+                    <div class="card-footer">
+                        <form action="{{url_for('AddCart')}}" method="POST">
+                            <input type="hidden" name="product_id" value="{{product.id}}">
+                            <button type="submit" class="btn btn-sm btn-warning float-left">Add to order</button>
+                            <label for=""> Quantity:</label>
+
+                            <input type="number" name="quantity" min="1" max="30" value="1"></td>
+
+                        <!--<a href="#" class="btn ntb-sm btn-warning">Add to order</a>-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {% endblock content %}
