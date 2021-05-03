@@ -97,10 +97,3 @@ def deleteitem(id):
     except Exception as e:
         print(e)
         return redirect(url_for('getCart'))
-
-
-
-
-
-
-
