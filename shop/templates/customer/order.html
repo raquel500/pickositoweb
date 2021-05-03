@@ -50,7 +50,6 @@
                         {% if orders.status == 'Paid' %} 
                         {% else %} 
                         <form action="{{url_for('payment')}}" method="POST">
-                            {% set amount = grandTotal.replace('.','') %}
                             <input type="hidden" name="amount" value="{{amount}}">
                             <input type="hidden" name="invoice" value="{{orders.invoice}}">
                             <script
